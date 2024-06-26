@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Listing{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Edit Listing</h2>
+    <form method="post" action="{% url 'listing_edit' listing.id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ listing.title }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3" required>{{ listing.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" name="price" value="{{ listing.price }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="main_img" class="form-label">Main Image</label>
+            <input type="file" class="form-control" id="main_img" name="main_img">
+            {% if listing.main_img %}
+                <img src="{{ listing.main_img.url }}" alt="Current Image" class="img-thumbnail mt-2" width="150">
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Update Listing</button>
+    </form>
+</div>
+{% endblock %}

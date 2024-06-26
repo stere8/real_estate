@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="form-body">
+            <div class="row">
+                <div class="form-holder">
+                    <div class="form-content">
+                        <div class="form-items">
+                            <h3>Login</h3>
+                            <p>Provide you data</p>
+                            <form method="post" action="/accounts/login/">
+                                {% csrf_token %}
+                                <div class="col-md-12">
+                                    <input type="text" name="username" autofocus="" autocapitalize="none"
+                                           autocomplete="username" maxlength="150" required="" id="id_username">
+                                    <label for="username">username</label>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <input type="password" name="password" autocomplete="current-password" required=""
+                                           id="id_password">
+                                    <label for="first_name">Password</label>
+                                </div>
+                                <div class="form-button mt-3">
+                                    <input type="submit" value="login" class="login-btn">
+                                    <input type="hidden" name="next" value="">
+                                </div>
+                                <strong>If you don't have an acount click here to <a style="{color: red !important}" href="{% url 'signup' %}">signup</a></strong>
+                            </form>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
