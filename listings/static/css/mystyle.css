@@ -38,6 +38,11 @@ html, body {
     padding: 60px;
 }
 
+.alert{
+    margin-top: 20px;
+}
+
+
 .form-content .form-items {
     border: 3px solid #fff;
     padding: 40px;
@@ -169,10 +174,7 @@ html, body {
     height: auto;
 }
 
-.card {
-    margin-bottom: 30px;
-    background: white;
-}
+
 
 .overflow-hidden {
     overflow: hidden!important;
@@ -217,13 +219,36 @@ html, body {
 
 .card {
     margin-bottom: 30px;
+    background: white;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    font-size: 1.25rem;
+}
+
+.card-body .d-flex p {
+    margin-bottom: 0; /* Remove bottom margin */
+}
+
+.card-body .btn {
+    margin-left: 20px; /* Adjust spacing between text and button */
 }
 
 .position-relative {
     position: relative!important;
+}
+
+.card-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Add space between elements */
+}
+
+.card-body .text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .shadow-none {
