@@ -1,11 +1,11 @@
 # views.py in listings app
 import datetime
-
+import json
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-
-from enums import ListingStatus,OrderStatus
+from django.core.serializers.json import DjangoJSONEncoder
+from enums import ListingStatus, OrderStatus
 from orders.models import Order
 from .models import Listing, User
 from .forms import ListingForm
@@ -19,23 +19,30 @@ def listing_list(request):
 
     page = request.GET.get('page')
     listings = p.get_page(page)
+    first_group = listings[:3]  # First three listings
+    second_group = listings[3:]  # Last three listings
 
-    context = {'listings': listings}
+    groups = [first_group, second_group]
+    context = {'groups': groups}
     return render(request, 'listings/listing_list.html', context)
 
 
 def listing_search(request):
-    search_term = request.GET.get('q','')
+    search_term = request.GET.get('q', '')
     filtered_listings = Listing.objects.filter(
         Q(title__icontains=search_term) | Q(description__icontains=search_term)
     )  # Search by title and description
 
-    paginator = Paginator(filtered_listings, 9)  # Set the number of listings per page
+    paginator = Paginator(filtered_listings, 6)  # Set the number of listings per page
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    first_group = page_obj[:3]  # First three listings
+    second_group = page_obj[3:]  # Last three listings
 
-    context = {'listings': page_obj, 'is_paginated': page_obj.has_other_pages(), 'is_from_search': True,
+    context = {'first_group': first_group,
+               'second_group': second_group, 'listings': page_obj, 'is_paginated': page_obj.has_other_pages(),
+               'is_from_search': True,
                'search_term': search_term}
     return render(request, 'listings/listing_list.html', context)
 
@@ -43,10 +50,15 @@ def listing_search(request):
 def listing_detail(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
     users = User.objects.all() if request.user.is_superuser else None
+    listing_reservations = Order.objects.filter(listing=pk).values_list('reservation_date', flat=True)
+    reserved_dates = json.dumps(list(listing_reservations), cls=DjangoJSONEncoder)
+
     context = {
         'listing': listing,
         'users': users,
+        'reserved_dates': reserved_dates,
     }
+
     return render(request, 'listings/listing_detail.html', context)
 
 
@@ -112,7 +124,8 @@ def reserve_listing(request, pk):
         listing.status = ListingStatus.PENDING
         listing.save()
 
-        order = Order(user_id=user.id,listing_id=listing.id,date_ordered=datetime.datetime.now(),status=OrderStatus.PENDING)
+        order = Order(user_id=user.id, listing_id=listing.id, date_ordered=datetime.datetime.now(),
+                      status=OrderStatus.PENDING)
         order.save()
         return redirect('listing_detail', pk=listing.pk)
     return redirect('listing_detail', pk=listing.pk)

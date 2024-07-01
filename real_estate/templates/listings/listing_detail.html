@@ -3,52 +3,74 @@
 {% block title %}Listing Details{% endblock %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-6">
-            {% load static %}
-            {% if listing.main_img %}
-                <img alt="Listing Image" class="img-fluid" src="{{ listing.main_img.url }}">
-            {% else %}
-                <img alt="Listing Image" class="img-fluid" src='/media/images/no_image.jpeg'>
-            {% endif %}
-        </div>
-        <div class="col-md-6">
-            <h2>{{ listing.title }}</h2>
-            <p class="lead">{{ listing.description }}</p>
-            <h3>Price: {{ listing.price }}</h3>
-            <p><strong>Available:</strong> {% if listing.available %}Yes{% else %}No{% endif %}</p>
-            {% if user.is_authenticated %}
-                {% if user.is_superuser %}
-                    <a href="{% url 'listing_update' listing.pk %}" class="btn btn-primary">Edit Listing</a>
-                    {% if listing.available %}
-                        <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
-                            {% csrf_token %}
-                            <div class="form-group">
-                                <label for="reserve_user">Reserve for:</label>
-                                <select name="reserve_user" id="reserve_user" class="form-control">
-                                    {% for u in users %}
-                                        <option value="{{ u.id }}">{{ u.username }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-secondary mt-2">Reserve</button>
-                        </form>
-                    {% endif %}
+    <div class="container" style="padding-top: 40px;">
+        <div class="row">
+            <div class="col-md-6">
+                {% load static %}
+                {% if listing.main_img %}
+                    <img alt="Listing Image" class="img-fluid" src="{{ listing.main_img.url }}">
                 {% else %}
-                    {% if listing.available %}
-                        <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-secondary">Reserve</button>
-                        </form>
+                    <img alt="Listing Image" class="img-fluid" src='/media/images/no_image.jpeg'>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <h2 class="estate-title">{{ listing.title }}</h2>
+                <p class="lead">{{ listing.description }}</p>
+                <h3 class="estate-price">Price: {{ listing.price }}</h3>
+                {% if user.is_authenticated %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'listing_update' listing.pk %}" class="btn btn-primary">Edit Listing</a>
+                        {% if listing.available %}
+                            <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="reserve_user">Reserve for:</label>
+                                    <select name="reserve_user" id="reserve_user" class="form-control">
+                                        {% for u in users %}
+                                            <option value="{{ u.id }}">{{ u.username }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reserve_date">Reserve Date:</label>
+                                    <input type="text" id="reserve_date" name="reserve_date" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-secondary mt-2">Reserve</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        {% if listing.available %}
+                            <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="reserve_date">Reserve Date:</label>
+                                    <input type="text" id="reserve_date" name="reserve_date" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-secondary">Reserve</button>
+                            </form>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
-            {% endif %}
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OgwmRWzBJ8QqapDLuk5GcRPQonp/4ZxENw1EuOMBIA81EybJPgQBOkgCsuZzLRWxm"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OgwmRWzBJ8QqapDLuk5GcRPQonp/4ZxENw1EuOMBIA81EybJPgQBOkgCsuZzLRWxm"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            var reservedDates = {{ reserved_dates|safe }};
+            $("#reserve_date").datepicker({
+                beforeShowDay: function(date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [reservedDates.indexOf(string) == -1];
+                },
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
 {% endblock %}

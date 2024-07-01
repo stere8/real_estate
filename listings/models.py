@@ -15,11 +15,6 @@ class Listing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     reserved_by_id = models.IntegerField(null=True, blank=True)
-    status = models.CharField(
-        max_length=20,
-        choices=[(status.name,status.value) for status in OrderStatus],
-        default= OrderStatus.PENDING.name
-    )
 
     def __str__(self):
         return self.title

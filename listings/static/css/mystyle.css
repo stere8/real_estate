@@ -65,6 +65,16 @@ html, body {
     margin-bottom: 5px;
 }
 
+.estate-title{
+    padding: 20px;
+    color: #d9edf7;
+}
+
+.estate-price{
+    padding: 10px;
+    color: #d9edf7;
+}
+
 .form-content h3.form-title {
     margin-bottom: 30px;
 }

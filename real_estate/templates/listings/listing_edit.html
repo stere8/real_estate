@@ -4,29 +4,44 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>Edit Listing</h2>
-    <form method="post" action="{% url 'listing_edit' listing.id %}" enctype="multipart/form-data">
+    <h2 class="h2 mb-4">Edit Listing</h2>
+    <form method="post" action="{% url 'listing_edit' listing.id %}" enctype="multipart/form-data" class="row g-3">
         {% csrf_token %}
-        <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="title" value="{{ listing.title }}" required>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ listing.title }}" required>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" id="description" name="description" rows="3" required>{{ listing.description }}</textarea>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required>{{ listing.description }}</textarea>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="price" class="form-label">Price</label>
-            <input type="number" class="form-control" id="price" name="price" value="{{ listing.price }}" required>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" class="form-control" id="price" name="price" value="{{ listing.price }}" required>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="main_img" class="form-label">Main Image</label>
-            <input type="file" class="form-control" id="main_img" name="main_img">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="main_img" class="form-label">Main Image</label>
+                <input type="file" class="form-control" id="main_img" name="main_img">
+            </div>
             {% if listing.main_img %}
-                <img src="{{ listing.main_img.url }}" alt="Current Image" class="img-thumbnail mt-2" width="150">
+            <div class="mb-3">
+                <label class="form-label">Current Image</label>
+                <div>
+                    <img src="{{ listing.main_img.url }}" alt="Current Image" class="img-thumbnail mt-2" width="150">
+                </div>
+            </div>
             {% endif %}
         </div>
-        <button type="submit" class="btn btn-primary">Update Listing</button>
+        <div class="col-12 text-end">
+            <button type="submit" class="btn btn-primary">Update Listing</button>
+        </div>
     </form>
 </div>
 {% endblock %}

@@ -7,5 +7,5 @@ class ListingStatus(Enum):
 
 class OrderStatus(Enum):
     PENDING = "Pending"
-    FINISHED = "Finished"
+    APPROVED = "Approved"
     CANCELED = "Canceled"

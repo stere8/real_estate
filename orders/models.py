@@ -12,7 +12,7 @@ User = get_user_model()
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    date_ordered = models.DateTimeField(auto_now_add=True)
+    reservation_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=20,
         choices=[(status.name, status.value) for status in OrderStatus],
