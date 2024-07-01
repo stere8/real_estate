@@ -1,10 +1,10 @@
 # views.py in listings app
 import datetime
-import json
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
-from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib import messages
 from enums import ListingStatus, OrderStatus
 from orders.models import Order
 from .models import Listing, User
@@ -50,13 +50,10 @@ def listing_search(request):
 def listing_detail(request, pk):
     listing = get_object_or_404(Listing, pk=pk)
     users = User.objects.all() if request.user.is_superuser else None
-    listing_reservations = Order.objects.filter(listing=pk).values_list('reservation_date', flat=True)
-    reserved_dates = json.dumps(list(listing_reservations), cls=DjangoJSONEncoder)
-
+    listing_reservations = Order.objects.filter(listing=pk)
     context = {
         'listing': listing,
         'users': users,
-        'reserved_dates': reserved_dates,
     }
 
     return render(request, 'listings/listing_detail.html', context)
@@ -119,13 +116,11 @@ def reserve_listing(request, pk):
             user = get_object_or_404(User, pk=user_id)
         else:
             user = request.user
-        listing.reserved_by_id = user.id
-        listing.available = False
-        listing.status = ListingStatus.PENDING
-        listing.save()
+        request.POST.get('reservation_date')
 
         order = Order(user_id=user.id, listing_id=listing.id, date_ordered=datetime.datetime.now(),
-                      status=OrderStatus.PENDING)
+                      status=OrderStatus.PENDING,reservation_date=date)
         order.save()
+        messages.success(request, 'Listing successfully reserved!')
         return redirect('listing_detail', pk=listing.pk)
     return redirect('listing_detail', pk=listing.pk)

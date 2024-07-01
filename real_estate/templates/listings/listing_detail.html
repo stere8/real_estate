@@ -33,44 +33,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="reserve_date">Reserve Date:</label>
-                                    <input type="text" id="reserve_date" name="reserve_date" class="form-control">
+                                    <input type="text" id="reserve_date" name="reserve_date" class="form-control datepicker">
                                 </div>
                                 <button type="submit" class="btn btn-secondary mt-2">Reserve</button>
                             </form>
                         {% endif %}
                     {% else %}
-                        {% if listing.available %}
-                            <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="reserve_date">Reserve Date:</label>
-                                    <input type="text" id="reserve_date" name="reserve_date" class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-secondary">Reserve</button>
-                            </form>
-                        {% endif %}
+                        <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="reserve_date">Reserve Date:</label>
+                                <input type="date" id="reserve_date" name="reserve_date" class="form-control datepicker">
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Reserve</button>
+                        </form>
                     {% endif %}
                 {% endif %}
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-OgwmRWzBJ8QqapDLuk5GcRPQonp/4ZxENw1EuOMBIA81EybJPgQBOkgCsuZzLRWxm"
-            crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(function() {
-            var reservedDates = {{ reserved_dates|safe }};
-            $("#reserve_date").datepicker({
-                beforeShowDay: function(date) {
-                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                    return [reservedDates.indexOf(string) == -1];
-                },
-                dateFormat: 'yy-mm-dd'
-            });
-        });
-    </script>
 {% endblock %}

@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'bootstrap_datepicker_plus',
     'bootstrap5',
     'listings',  # Your app
     'accounts',  # Ensure accounts app is included

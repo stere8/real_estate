@@ -21,7 +21,8 @@ class Order(models.Model):
     created_on = models.DateTimeField(auto_now_add=True, null=True)
 
     def __str__(self):
-        return f"Reservation {self.id} by {self.user} on {self.date_ordered}"
+        return f"Reservation {self.id} by {self.user} on {self.reservation_date}"
+
 
 @receiver(post_init, sender=Order)
 def check_and_update_order_status_on_fetch(sender, instance, **kwargs):
