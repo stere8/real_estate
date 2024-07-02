@@ -116,10 +116,10 @@ def reserve_listing(request, pk):
             user = get_object_or_404(User, pk=user_id)
         else:
             user = request.user
-        request.POST.get('reservation_date')
+        date = request.POST.get('reserve_date')
 
-        order = Order(user_id=user.id, listing_id=listing.id, date_ordered=datetime.datetime.now(),
-                      status=OrderStatus.PENDING,reservation_date=date)
+        order = Order(user_id=user.id, listing_id=listing.id, created_on=datetime.datetime.now(),
+                      status=OrderStatus.PENDING.value,reservation_date=date)
         order.save()
         messages.success(request, 'Listing successfully reserved!')
         return redirect('listing_detail', pk=listing.pk)

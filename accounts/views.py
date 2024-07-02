@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect, get_object_or_404
 from listings.models import Listing
-from .forms import  UserUpdateForm
+from orders.models import Order
 from django.contrib.auth import views as auth_views, logout as auth_logout
 from django.db.models import Q
 from .models import User
@@ -95,19 +95,10 @@ def accounts_list(request):
 @superuser_required
 def account_detail(request, pk):
     user = get_object_or_404(User, pk=pk)
-    reserved_listings = Listing.objects.filter(reserved_by_id=user.id)
-    print(reserved_listings, user.id)
-    if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=user)
-        if form.is_valid():
-            form.save()
-            return redirect('account_detail', pk=user.pk)
-    else:
-        form = UserUpdateForm(instance=user)
-
+    orders = Order.objects.filter(user=user.id)
+    print(orders, user.id)
     context = {
         'account': user,
-        'reserved_listings': reserved_listings,
-        'form': form
+        'orders': orders,
     }
     return render(request, 'accounts/accounts_detail.html', context)
