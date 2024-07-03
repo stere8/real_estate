@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container mt-4">
     <h2 class="h2 mb-4">Edit Listing</h2>
-    <form method="post" action="{% url 'listing_edit' listing.id %}" enctype="multipart/form-data" class="row g-3">
+    <form method="post" action="{% url 'listing_update' listing.id %}" enctype="multipart/form-data" class="row g-3">
         {% csrf_token %}
         <div class="col-md-6">
             <div class="mb-3">

@@ -20,6 +20,8 @@
                 {% if user.is_authenticated %}
                     {% if user.is_superuser %}
                         <a href="{% url 'listing_update' listing.pk %}" class="btn btn-primary">Edit Listing</a>
+                        <a href="{% url 'listing_update' listing.pk %}" class="btn btn-warning">Delete Listing</a>
+
                         {% if listing.available %}
                             <form method="post" action="{% url 'reserve_listing' listing.pk %}" class="mt-2">
                                 {% csrf_token %}

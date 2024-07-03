@@ -44,9 +44,10 @@ def listing_search(request):
     page_obj = paginator.get_page(page_number)
     first_group = page_obj[:3]  # First three listings
     second_group = page_obj[3:]  # Last three listings
+    groups = [first_group, second_group]
 
     context = {'first_group': first_group,
-               'second_group': second_group, 'listings': page_obj, 'is_paginated': page_obj.has_other_pages(),
+               'second_group': second_group, 'groups': groups, 'is_paginated': page_obj.has_other_pages(),
                'is_from_search': True,
                'search_term': search_term}
     return render(request, 'listings/listing_list.html', context)
