@@ -45,10 +45,41 @@
                             <div class="form-group">
                                 <label for="reserve_date">Reserve Date:</label>
                                 <input type="date" id="reserve_date" name="reserve_date"
-                                       class="form-control datepicker">
+                                       class="form-control datepicker" required>
                             </div>
+                            <div class="form-group">
+                                <label for="credit_card_number">Credit Card Number:</label>
+                                <input type="text" id="credit_card_number" name="credit_card_number"
+                                       class="form-control" maxlength="16" pattern="\d{16}" required>
+                            </div>
+                            <div class="form-group d-flex flex-row">
+                                <div class="mr-2">
+                                    <label for="expiration_month">Expiration Month (MM):</label>
+                                    <input type="text" id="expiration_month" name="expiration_month"
+                                           class="form-control" maxlength="2" pattern="\d{2}" required>
+                                </div>
+                                <div style="font-size: 1.5rem">/</div>
+                                <div>
+                                    <label for="expiration_year">Expiration Year (YY):</label>
+                                    <input type="text" id="expiration_year" name="expiration_year" class="form-control"
+                                           maxlength="2" pattern="\d{2}" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="csv">CSV:</label>
+                                <input type="text" id="csv" name="csv" class="form-control" maxlength="3"
+                                       pattern="\d{3}" required>
+                            </div>
+                            {% if message %}
+                                <div>
+                                    <p>
+                                        {{ message }}
+                                    </p>
+                                </div>
+                            {% endif %}
                             <button type="submit" class="btn btn-secondary">Reserve</button>
                         </form>
+
                     {% endif %}
                 {% endif %}
             </div>

@@ -1018,8 +1018,8 @@ html, body {
 }
 
 .estate-title{
-    padding: 20px;
-    color: #d9edf7;
+    padding: 20px; !important;
+    color: #d9edf7; !important;
 }
 
  .order-container {

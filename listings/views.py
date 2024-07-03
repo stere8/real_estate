@@ -12,6 +12,11 @@ from .forms import ListingForm
 from django.core.paginator import Paginator
 from django.db.models import Q
 
+VALID_CREDIT_CARDS = [
+    {"number": "4247000000009999", "expiration_date_month": "12", "expiration_date_year": "25", "csv": "123"},
+    {"number": "5375888855550001", "expiration_date_month": "11", "expiration_date_year": "24", "csv": "456"}
+]
+
 
 def listing_list(request):
     listings_list = Listing.objects.all()  # Replace with your queryset
@@ -116,11 +121,27 @@ def reserve_listing(request, pk):
             user = get_object_or_404(User, pk=user_id)
         else:
             user = request.user
-        date = request.POST.get('reserve_date')
+        reserve_date = request.POST.get('reserve_date')
+        credit_card_number = request.POST.get("credit_card_number")
+        expiration_month = request.POST.get("expiration_month")
+        expiration_year = request.POST.get("expiration_year")
+        csv = request.POST.get("csv")
 
-        order = Order(user_id=user.id, listing_id=listing.id, created_on=datetime.datetime.now(),
-                      status=OrderStatus.PENDING.value,reservation_date=date)
-        order.save()
-        messages.success(request, 'Listing successfully reserved!')
-        return redirect('listing_detail', pk=listing.pk)
+        is_valid = any(card for card in VALID_CREDIT_CARDS if
+                       card["number"] == credit_card_number and
+                       card["expiration_date_month"] == expiration_month and
+                       card["expiration_date_year"] == expiration_year and
+                       card["csv"] == csv and
+                       reserve_date)
+
+        if is_valid:
+            order = Order(user_id=user.id, listing_id=listing.id, created_on=datetime.datetime.now(),
+                          status=OrderStatus.PENDING.value, reservation_date=reserve_date)
+            order.save()
+            messages = 'Listing successfully reserved!'
+        else:
+            # Booking failed
+            messages = "Wrong credit card number"
+        return render(request, 'listings/listing_detail.html', {'listing': listing, 'message': messages})
+
     return redirect('listing_detail', pk=listing.pk)
