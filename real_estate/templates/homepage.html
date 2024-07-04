@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="welcome-hero-txt">
+            <h2>Welcome to Hadd Real-Estate </h2>
+        </div>
+        <p class="lead">Where Engineering Excellence Meets Real Estate Expertise</p>
+        <hr class="my-4">
+        <p>Welcome to our innovative real estate platform, where a team of dedicated engineers and experienced
+            agents come together to bring you the best property listings and viewing experiences.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Our Team</h2>
+            <p><strong><i class="fas fa-user-cog"></i> Engineers:</strong> Our talented engineers ensure that the
+                quality of our listings is unmatched. They work tirelessly to maintain a seamless, user-friendly
+                experience, so you can find your dream property with ease.</p>
+            <p><strong><i class="fas fa-concierge-bell"></i> Agents:</strong> Our professional agents are here to
+                represent you and present the finest properties available. They provide personalized service to help you
+                navigate the real estate market.</p>
+        </div>
+        <div class="col-md-6">
+            <h2>How It Works</h2>
+            <ul>
+                <li><strong><i class="fas fa-user-plus"></i> Create an Account:</strong> Sign up quickly with just a few
+                    details to start your property search.
+                </li>
+                <li><strong><i class="fas fa-home"></i> Browse Listings:</strong> Explore a comprehensive database of
+                    properties with high-quality photos, detailed descriptions, and virtual tours.
+                </li>
+                <li><strong><i class="fas fa-calendar-check"></i> Book a Visit:</strong> Found a property you like?
+                    Schedule a visitation directly through our platform.
+                </li>
+                <li><strong><i class="fas fa-handshake"></i> Agent Confirmation:</strong> Once you book a visit, one of
+                    our agents will confirm the appointment and guide you through the process.
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <h2>Visitation Costs</h2>
+            <p>Each property visit is priced at $100. This fee ensures that you receive dedicated time and attention
+                from our agents, making your property viewing experience as informative and efficient as
+                possible.</p>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-12 text-center">
+            <h2>Why Choose Us?</h2>
+            <p><strong>Quality Listings:</strong> Our engineers ensure that every listing is detailed and
+                up-to-date.</p>
+            <p><strong>Expert Guidance:</strong> Our agents provide professional support throughout your property
+                journey.</p>
+            <p><strong>User-Friendly Platform:</strong> Navigate easily through our intuitive interface and find
+                your perfect home faster.</p>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-6 text-center">
+            <h2>Create an Account</h2>
+            <p>Join our platform in just a few easy steps. Click the button below to get started!</p>
+            <a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
+        </div>
+        <div class="col-md-6 text-center">
+            <h2>View Listings</h2>
+            <p>Explore our extensive list of properties. Click the button below to start your search!</p>
+            <a class="btn btn-primary" href="{% url 'listing_list' %}">Browse Listings</a>
+        </div>
+    </div>
+    </div>
+{% endblock %}

@@ -79,7 +79,7 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                         <i class="fa fa-bars"></i>
                     </button>
-                    <a class="navbar-brand" href="{% url 'listing_list' %}">
+                    <a class="navbar-brand" href="{% url 'homepage' %}">
                         Hadd Real-Estate
                     </a>
                 </div><!--/.navbar-header-->
@@ -93,7 +93,7 @@
                         </li>
                         {% if user.is_authenticated %}
                             <li>
-                                <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
+                                <a class="nav-link" href="{% url 'order_list' %}"></a>
                             </li>
                             {% if user.is_superuser %}
                                 <li>
