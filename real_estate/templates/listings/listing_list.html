@@ -19,9 +19,6 @@
             </form>
         </div>
         <div class="container mt-4">
-            {% if user.is_authenticated and user.is_superuser %}
-                <a href="{% url 'listing_create' %}" class="btn btn-outline-success float-end">Add Listings</a>
-            {% endif %}
             {% if is_from_search %}
                 <h2 class="h3 mb-4 text-center">Search results for '{{ search_term }}'</h2>
             {% endif %}
