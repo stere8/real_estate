@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-jl)g3_#dtje9%5tz2+s6p8-%$po*10#e8-i9c2syv$^188jx)c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','real-estate-xsbe.onrender.com','*']
+ALLOWED_HOSTS = ['.vercel.app', 'real-estate-xsbe.onrender.com', '*']
 
 # Application definition
 INSTALLED_APPS = [
@@ -24,10 +24,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'fontawesomefree',
     'bootstrap5',
     'listings',  # Your app
     'accounts',  # Ensure accounts app is included
-    'orders',   # Ensure orders app is included
+    'orders',  # Ensure orders app is included
 ]
 
 AUTH_USER_MODEL = 'accounts.User'  # Ensure this is correctly set
@@ -103,11 +104,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
