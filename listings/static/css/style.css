@@ -1452,4 +1452,9 @@ a {
 .btn-primary:hover {
     background-color: #2980b9;
 }
+
+/* Add rounded corners to cards */
+.card, .custom-card, .single-testimonial-box, .single-blog-item, .single-explore-item {
+    border-radius: 10px; /* Adjust the value as needed */
+}
 /*========================Thank you=================
