@@ -91,9 +91,6 @@
                         <li>
                             <a class="nav-link" href="{% url 'listing_list' %}">Listings</a>
                         </li>
-                        {% if user.is_authenticated and user.is_superuser %}
-                            <a href="{% url 'listing_create' %}" class="nav-link">Add Listings</a>
-                        {% endif %}
                         {% if user.is_authenticated %}
                             <li>
                                 <a class="nav-link" href="{% url 'order_list' %}">Orders</a>
@@ -101,6 +98,9 @@
                             {% if user.is_superuser %}
                                 <li>
                                     <a class="nav-link" href="{% url 'accounts_list' %}">Users</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="{% url 'listing_create' %}">Add Listings</a>
                                 </li>
                             {% endif %}
                         {% endif %}
