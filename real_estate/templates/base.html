@@ -34,8 +34,6 @@
     <!--responsive.css-->
     <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-
 </head>
 <body>
 <header id="header-top" class="header-top">
@@ -46,30 +44,12 @@
                     <li class="header-top-contact">
                         +48 575 793 313
                     </li>
-                    {% if user.is_authenticated %}
-                        <li class="header-top-contact">
-                            <form method="post" action="{% url 'logout' %}">
-                                {% csrf_token %}
-                                <button type="submit">
-                                    Logout({{ user.username }})
-                                </button>
-                            </form>
-                        </li>
-                    {% else %}
-                        <li class="header-top-contact">
-                            <form method="post" action="{% url 'login' %}">
-                                {% csrf_token %}
-                                <button type="submit">
-                                    Login
-                                </button>
-                            </form>
-                        </li>
-                    {% endif %}
                 </ul>
             </div>
         </li>
     </ul>
 </header><!--/.header-top-->
+
 <section class="top-area">
     <div class="header-area">
         <!-- Start Navigation -->
@@ -106,6 +86,21 @@
                                 </li>
                             {% endif %}
                         {% endif %}
+                        <li>
+                            <a class="nav-link" href="{% url 'contact' %}"> Contact-Us</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a class="nav-link" href="{% url 'logout' %}"> Logout({{ user.username }})</a>
+                            </li>
+
+                        {% else %}
+
+                            <li>
+                                <a class="nav-link" href="{% url 'login' %}"> Login</a>
+                            </li>
+                        {% endif %}
+
                     </ul><!--/.nav -->
                 </div><!-- /.navbar-collapse -->
             </div><!--/.container-->
